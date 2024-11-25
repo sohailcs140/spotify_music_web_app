@@ -1,0 +1,32 @@
+body{
+    font-family: var(--font-primary);
+    color: var(--font-color-primary);
+    
+}
+
+
+.ps{
+    @apply ps-6; 
+}
+
+.pt{
+    @apply pt-6; 
+}
+
+.pst{
+    @apply ps-6 pt-6; 
+    
+}
+
+.px{
+    @apply px-6;
+}
+.py{
+    @apply py-6;
+}
+
+.pe{
+ @apply pe-6;
+}
+
+
