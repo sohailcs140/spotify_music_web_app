@@ -5,8 +5,8 @@ import PauseIcon from "@mui/icons-material/Pause";
 const RecSongCard = ({title, artist, isPlay=false, image}) => {
   return (
     <div
-      className={` relative w-full sm:w-[20%] max-w-[200px] max-h-[260px] rounded-2xl 
-        overflow-hidden 
+      className={` relative rounded-2xl 
+        overflow-hidden item
         `}
     >
         {/* iamge */}
