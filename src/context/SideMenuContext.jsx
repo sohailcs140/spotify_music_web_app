@@ -3,6 +3,7 @@ import { createContext, useState, useContext } from "react";
 export const sideMenuContext = createContext({
   isOpen: false,
   toggleSideMenu: () => {},
+ 
 });
 
 export const SideMenuContextProvider = ({ children }) => {

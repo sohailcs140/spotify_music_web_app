@@ -4,8 +4,35 @@ import ChartItem from "./ChartItem";
 import SectionHeading from '../common/SectionHeading';
 import tumbnailImage1  from "../../assets/images/imgChart2.svg"
 import tumbnailImage2 from "../../assets/images/imgChart1.svg"
+import { useEffect, useState } from 'react';
+import Client from '../../api/axiosClient';
+
 
 const TopChartList = () => {
+
+  const [feturePlayList, setFeturePlayList] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
+
+  useEffect(()=>{
+      const getFeturePlayList = async()=>{
+        setIsLoading(true)
+        const resp = await Client.get("browse/featured-playlists?limit=10")
+        
+        if(resp.status == 200){
+          console.log(resp, "ChartList");
+          
+          setFeturePlayList(resp.data.playlists?.items)
+        }
+
+        setIsLoading(false)
+      }
+
+      getFeturePlayList()
+  }, [])
+
+
+    
 
 
     const options = {
@@ -33,6 +60,8 @@ const TopChartList = () => {
         dots: false
       }
 
+
+
     const songs = [
         {title:"Sial", artist:"Mahalini", duration:"4:03", isPlay:false, number:"1"},
         {title:"Rayuan Perempuan Gila", artist:"Nadin Amizah ", duration:"5:20", isPlay:false, number:"2"},
@@ -44,9 +73,14 @@ const TopChartList = () => {
         <div className="pe">
             <SectionHeading text={"Top Chart This Week"}/>
             <OwlCarousel className='owl-theme'   margin={25} {...options}>
-                <ChartItem songs={songs} tumbImage={tumbnailImage1} tumbTitle={"100 TOP Hits"}/>
-                <ChartItem songs={songs} tumbImage={tumbnailImage2} tumbTitle={"100 TOP Hits"}/>
-                <ChartItem songs={songs} tumbImage={tumbnailImage1} tumbTitle={"100 TOP Hits"}/>
+              {
+                feturePlayList?.map((playlist)=>{
+
+                  return  <ChartItem playlist={playlist} key={playlist.id}/>
+                })
+              }
+               
+                
             </OwlCarousel>
         </div>
     );

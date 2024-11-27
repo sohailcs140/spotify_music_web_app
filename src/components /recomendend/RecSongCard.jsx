@@ -2,7 +2,10 @@
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 
-const RecSongCard = ({title, artist, isPlay=false, image}) => {
+const RecSongCard = ({track}) => {
+  
+  
+  const isPlay = false
   return (
     <div
       className={` relative rounded-2xl 
@@ -11,21 +14,25 @@ const RecSongCard = ({title, artist, isPlay=false, image}) => {
     >
         {/* iamge */}
       <div className="relative">
-        <img src={image} alt="" className="w-full" />
-        <div className="playbtn-overlay absolute bottom-[10px] right-3 w-[35px] h-[35px] rounded-full bg-[#121212] opacity-[.5] z-[9]">
-      </div>
-      <div className="absolute flex hover:cursor-pointer items-center justify-center bottom-[10px] right-3 w-[35px] h-[35px] rounded-full z-[9000]">
-            
-        {isPlay?<PauseIcon className="text-white"/>:<PlayArrowIcon className="text-white"/>}
-      </div>
+        <img src={track?.album?.images[0]?.url} alt="" className="w-full" />
+        {track?.preview_url &&<div className="playbtn-overlay absolute bottom-[10px] right-3 w-[35px] h-[35px] rounded-full bg-[#121212] opacity-[.5] z-[9]">
+        </div>
+        
+        }
+      {track?.preview_url && <div className="absolute flex hover:cursor-pointer items-center justify-center bottom-[10px] right-3 w-[35px] h-[35px] rounded-full z-[9000]">
+        
+        {isPlay?<PauseIcon className="text-white"/>:<PlayArrowIcon 
+          
+          className="text-white"/>}
+      </div>}
       </div>
  {/* text content */}
       <div className="mt-4">
         <h3 className="text-[.9rem] font-medium text-color-primary capitalize">
-          {title}
+        {track.name}
         </h3>
         <p className="text-[.7rem]  text-color-dim ps-1 capitalize">
-          {artist}
+        {track.artists.map((artist) => artist.name).join(", ")}
         </p>
       </div>
     

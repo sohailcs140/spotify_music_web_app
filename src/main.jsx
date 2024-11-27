@@ -12,15 +12,28 @@ import "./styles/style.css";
 
 import App from "./App.jsx";
 import Layout from "./Layout";
+import LoginPage from "./pages/auth/LoginPage"
+import CallbackPage from "./pages/auth/CallbackPage.jsx";
+import ProtectedRoute from "./components /ProtectedRoute.jsx";
+import { AuthContextProvider } from "./context/AuthContext.jsx";
+import LoginPage2 from "./pages/auth/LoginPage2.jsx";
+
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <AuthContextProvider>
     <Router>
       <Routes>
+        {/* protected routes */}
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={<ProtectedRoute element={App}/>} />
         </Route>
+        {/* public routes */}
+        <Route path="/login" element={<LoginPage2/>}/>
+        <Route path="/callback" element={<CallbackPage/>}/>
       </Routes>
     </Router>
+    </AuthContextProvider>
   </StrictMode>
 );

@@ -18,6 +18,7 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 
 
 const Player = ({ playlist = [] }) => {
+
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -181,6 +182,7 @@ const Player = ({ playlist = [] }) => {
           <audio
             ref={audioRef}
             src={playlist[currentTrack]}
+            // src=""
             onLoadedMetadata={handleLoadedMetadata}
             onTimeUpdate={handleTimeUpdate}
             className="hidden"

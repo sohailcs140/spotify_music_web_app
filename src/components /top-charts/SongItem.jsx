@@ -2,9 +2,10 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
 import { useState } from "react";
 
-const SongItem = ({ title, artist, duration, isPlay, number }) => {
-  const [active, setActive] = useState(isPlay);
-
+const SongItem = ({ track, number}) => {
+  const [active, setActive] = useState(false);
+  console.log(track, "song item");
+  
   return (
     <div
       className={`flex gap-4 ps-3 p-2 transition-all ease-in-out cursor-pointer
@@ -20,7 +21,7 @@ const SongItem = ({ title, artist, duration, isPlay, number }) => {
         >
           {number}
         </h4>
-        <button className={`group-hover:block  ${active ? "block" : "hidden"}`}>
+        <button className={`group-hover:block  ${active ? "block" : "hidden"}`} onClick={()=>setActive((prev)=>!prev)}>
           {active ? (
             <PauseCircleFilledIcon onClick={() => setActive(false)} />
           ) : (
@@ -29,9 +30,9 @@ const SongItem = ({ title, artist, duration, isPlay, number }) => {
         </button>
       </div>
       <div>
-        <h4 className="text-[.9rem] font-medium text-color-primary">{title}</h4>
+        <h4 className="text-[.9rem] font-medium text-color-primary">{track.name}</h4>
         <p className="text-[.8rem] font-medium text-color-light-dim">
-          {artist} • {duration}
+          {track?.artists.map((artist) => artist.name).join(", ")} • {track?.duration}
         </p>
       </div>
     </div>
