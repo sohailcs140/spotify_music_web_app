@@ -3,20 +3,13 @@ import RecSongCard from "./RecSongCard";
 import { Fragment, useState } from "react";
 import OwlCarousel from "react-owl-carousel";
 
-import Song1 from "../../assets/images/rec_song_1.svg";
-import Song2 from "../../assets/images/rec_song_2.svg";
-import Song3 from "../../assets/images/rec_song_3.svg";
-import Song4 from "../../assets/images/rec_song_4.svg";
-import Song5 from "../../assets/images/rec_song_5.svg";
-import Song6 from "../../assets/images/rec_song_6.svg";
 import { getRandomRecommendations } from "../../api/dashboard";
 import { useEffect } from "react";
 
-const RecSongsList = () => {
+const RecSongsList = ({ tracksList = undefined, textTitle = "" }) => {
   const [tracks, setTracks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("")
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const options = {
     responsive: {
@@ -43,74 +36,73 @@ const RecSongsList = () => {
     dots: false,
   };
 
-  // const data = await getRandomRecommendations()
-
   useEffect(() => {
     const getSongs = async () => {
       setIsLoading(true);
 
       const temp = await getRandomRecommendations();
-      console.log(temp);
 
-      setTracks(temp.tracks);
+      setTracks(temp.tracks.items);
     };
-    getSongs().then((res) => {
-      setIsLoading(false);
-    }).catch(err=>{
-      setIsLoading(false)
-      setError(err)
-    });
+
+    if(!tracksList){
+      getSongs()
+      .then((res) => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setError(err);
+      });
+    }
+    
   }, []);
 
   if (isLoading) {
-    return <SkeletonLoader />;
+    return <RecSongSkeletonLoader textTitle={textTitle}/>;
   }
-  if(error){
 
-    return <h1>{error.message}</h1>
-  }
 
   return (
     <Fragment>
-      <SectionHeading text="Recommended" />
+      <SectionHeading text={textTitle ? textTitle : "Recommended"} />
       <OwlCarousel className="owl-theme " loop margin={20} {...options}>
-        {tracks.map((track) => (
-          <RecSongCard track={track} key={track.id} />
-        ))}
+        {tracksList
+          ? tracksList.map((track) => (
+              <RecSongCard track={track} key={track.id} />
+            ))
+          : tracks?.map((track) => (
+              <RecSongCard track={track} key={track.id} />
+            ))}
       </OwlCarousel>
     </Fragment>
   );
 };
 
-
-function Skeleton() {(
-  <div className="relative rounded-2xl overflow-hidden item animate-pulse bg-gray-300">
-    {/* Skeleton Image */}
-    <div className="relative bg-gray-400 h-[200px]">
-      <div className="absolute top-0 left-0 w-full h-full bg-gray-400 opacity-60"></div>
-      {/* Skeleton play button */}
-      <div className="absolute bottom-[10px] right-3 w-[35px] h-[35px] rounded-full bg-gray-500 opacity-[.5] z-[9]"></div>
-      <div className="absolute flex items-center justify-center bottom-[10px] right-3 w-[35px] h-[35px] rounded-full bg-gray-600 opacity-75 z-[9000]"></div>
-    </div>
-
-    {/* Skeleton Text Content */}
-    <div className="mt-4">
-      <h3 className="w-[60%] h-[20px] bg-gray-300 rounded-md animate-pulse mb-2"></h3>
-      <p className="w-[40%] h-[15px] bg-gray-300 rounded-md animate-pulse"></p>
-    </div>
-  </div>
-)};
-
-
-
-
-function SkeletonLoader() {
+export function RecSongSkeletonLoader({textTitle}) {
   return (
     <Fragment>
-      <SectionHeading text="Recommended" />
-      <h1>Loading...</h1>
-      <Skeleton/>
+     <SectionHeading text={textTitle ? textTitle : "Recommended"} />
+      <div className=" flex gap-4">
+      <RecSongCardSkeleton />
+      <RecSongCardSkeleton />
+      <RecSongCardSkeleton /> 
+      </div>
     </Fragment>
+  );
+}
+
+function RecSongCardSkeleton() {
+  return (
+    <div className="relative rounded-2xl overflow-hidden item w-[300px]">
+      <div className="relative w-full h-48 bg-gray-300 animate-pulse">
+        <div className="w-full h-full bg-gray-400 animate-pulse" />
+      </div>
+      <div className="mt-4">
+        <div className="h-4 w-32 bg-gray-300 animate-pulse mb-2"></div>{" "}
+        <div className="h-3 w-24 bg-gray-300 animate-pulse"></div>{" "}
+      </div>
+    </div>
   );
 }
 

@@ -5,7 +5,7 @@ import { Suspense, lazy } from "react";
 
 function App() {
   return (
-    <div className="">
+    <div className=" overflow-hidden">
       <RecSongsList />
       <TopChartList />
       <AlbumList />

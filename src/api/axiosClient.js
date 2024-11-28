@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { SPOTIFY_TOKEN_NAME } from '../utils/constants';
-
+import { getToken } from '../utils/authLocalStorage';
 
 const Client = axios.create({
   baseURL: 'https://api.spotify.com/v1/', 
 });
 
-const token = localStorage.getItem(SPOTIFY_TOKEN_NAME);
+const token = getToken();
 
 Client.interceptors.request.use(config => {
   if (token) {

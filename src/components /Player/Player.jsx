@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Fragment } from "react";
 
 import Song1 from "../../assets/images/rec_song_1.svg";
 import bgPalyer from "../../assets/images/bgplayer.svg";
@@ -15,7 +15,7 @@ import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import RepeatOneOnIcon from "@mui/icons-material/RepeatOneOn";
 import ShuffleOnIcon from "@mui/icons-material/ShuffleOn";
 import ListAltIcon from '@mui/icons-material/ListAlt';
-
+import FavoriteList from "./FavoriteList";
 
 const Player = ({ playlist = [] }) => {
 
@@ -28,6 +28,7 @@ const Player = ({ playlist = [] }) => {
   const [isMuted, setIsMuted] = useState(false); // Mute state
   const [isLoopingTrack, setIsLoopingTrack] = useState(false);
   const [isLoopingPlaylist, setIsLoopingPlaylist] = useState(false);
+  const [isFavoriteListOpen, setFavoriteListOpen] = useState(false)
 
   const togglePlayPause = () => {
     if (isPlaying) {
@@ -143,6 +144,7 @@ const Player = ({ playlist = [] }) => {
   const progressPercentage = (currentTime / duration) * 100 || 0;
 
   return (
+    <Fragment>
     <div className="grid grid-rows-3 w-full sm:grid-rows-1 sm:grid-cols-[1fr_2fr_1fr] items-center px py-2 lg:p-4 sm:w-[82%] fixed bottom-0 right-0 z-[99]">
       
       <div className="flex items-center gap-3 ">
@@ -221,7 +223,7 @@ const Player = ({ playlist = [] }) => {
                 }%)`,
           }}
         />
-        <button>
+        <button onClick={()=> setFavoriteListOpen(prev=> !prev)}>
             <ListAltIcon/>
         </button>
       </div>
@@ -232,6 +234,8 @@ const Player = ({ playlist = [] }) => {
         style={{ backgroundImage: `url(${bgPalyer})` }}
       ></div>
     </div>
+    <FavoriteList isOpen={isFavoriteListOpen}/>
+    </Fragment>
   );
 };
 

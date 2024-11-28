@@ -1,25 +1,28 @@
 import { useEffect } from "react";
-import useAuth from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
+import { setToken, checkToken } from "../../utils/authLocalStorage";
 
 const CallbackPage = () => {
-  const { setToken, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  if(checkToken()){
+    return window.location.replace("/")
+  }
+
 
   useEffect(() => {
     const hash = window.location.hash;
 
-    if (hash && !isAuthenticated) {
+    if (hash) {
       const urlParams = new URLSearchParams(hash.slice(1));
       const token = urlParams.get("access_token");
       setToken(token);
     }
 
-    if (isAuthenticated) {
-      return navigate("/");
+    if (checkToken()) {
+      return window.location.replace("/");
     }
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <div>

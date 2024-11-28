@@ -4,6 +4,7 @@
 
 project : spotify-music-web-app
 
-- setup the enviroment in react and tailwind, meterial icons
-- create for the project
-- implement side menu, header, and Recommended songs Section,
+- make the side responsive for all screens.
+- add oAuth with Spotify
+- create a custome audio player.
+- load data from spotify to dashboard like (Recommended song, top playlist, top albums)

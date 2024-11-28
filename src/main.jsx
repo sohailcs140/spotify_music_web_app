@@ -17,23 +17,22 @@ import CallbackPage from "./pages/auth/CallbackPage.jsx";
 import ProtectedRoute from "./components /ProtectedRoute.jsx";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import LoginPage2 from "./pages/auth/LoginPage2.jsx";
-
+import SearchPage from "./pages/SearchPage.jsx";
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthContextProvider>
     <Router>
       <Routes>
         {/* protected routes */}
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<ProtectedRoute element={App}/>} />
+          <Route path="/search/" element={<ProtectedRoute element={SearchPage}/>} />
         </Route>
         {/* public routes */}
-        <Route path="/login" element={<LoginPage2/>}/>
+        <Route path="/login" element={<LoginPage/>}/>
         <Route path="/callback" element={<CallbackPage/>}/>
       </Routes>
     </Router>
-    </AuthContextProvider>
   </StrictMode>
 );

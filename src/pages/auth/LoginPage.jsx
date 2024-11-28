@@ -1,16 +1,14 @@
 import { useNavigate } from "react-router"
-import useAuth from "../../context/AuthContext";
+import { checkToken } from "../../utils/authLocalStorage";
+
 
 const LoginPage = () => {
     const navigate = useNavigate()
-    const {isAuthenticated, getToken} = useAuth()
-    
-    console.log(getToken());
-    
-    if(isAuthenticated || getToken()){
+    const isAuthenticated = checkToken()
+
+    if(isAuthenticated){
         return navigate("/")
     }
-
 
     const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID
     

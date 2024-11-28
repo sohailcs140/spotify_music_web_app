@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import useAuth from '../../context/AuthContext';
 import { useNavigate } from 'react-router';
-
+import { checkToken } from '../../utils/authLocalStorage';
 
 
 
 const LoginPage2 = () => {
 
-    const {isAuthenticated, getToken, setToken}  = useAuth()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
+    
+    const isAuthenticated = checkToken()
 
+    if(isAuthenticated){
+        return navigate("/")
+    }
+
+
+    
     async function login() {
         try{
         setIsLoading(true)
@@ -24,7 +30,7 @@ const LoginPage2 = () => {
 
         const data = await response.json()
 
-        setToken(data.access_token)
+        // setToken(data.access_token)
         
         }catch(error){
 
@@ -33,13 +39,6 @@ const LoginPage2 = () => {
         }
 
     }
-
-
-    if(isAuthenticated){
-return navigate("/")        
-    }
-
-
 
     return (
        <div className="h-screen flex justify-center items-center bg-gradient-to-r from-variant-primary to-variant-secondary">
