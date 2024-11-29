@@ -8,3 +8,11 @@ project : spotify-music-web-app
 - add oAuth with Spotify
 - create a custome audio player.
 - load data from spotify to dashboard like (Recommended song, top playlist, top albums)
+
+
+
+project : spotify-music-web-app
+- fixed oAuth with Spotify
+- fixed load data from spotify to dashboard like (Recommended song, top playlist, top albums)
+- added add to favorite song feauter
+- add search option to search track base on albums, artists, track

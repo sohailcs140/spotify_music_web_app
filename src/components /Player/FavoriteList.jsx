@@ -4,22 +4,25 @@ import bgPalyer from "../../assets/images/bgplayer.svg";
 import { useEffect } from "react";
 import { useState } from "react";
 
+
 const FavoriteList = ({ isOpen }) => {
   
-    const [favoriteTraks, setFavoriteTraks] = useState(getFavoriteTracks())
+    const [favoriteTraks, setFavoriteTraks] = useState([])
 
-    console.log(favoriteTraks, "lllllllllllllllllllllllllllllllllllllllllllllll");
     
-    // useEffect(()=>{
-        
-    //     // setFavoriteTraks((prev)=>getFavoriteTracks())
-    // }, [isOpen])
+    useEffect(()=>{
+
+        setFavoriteTraks(getFavoriteTracks());
+
+      }, [isOpen])
+      
+    
     
     
   return (
     <div
       className={`absolute bottom-[8%]  h-[80%]
-         transform  w-full sm:w-50% lg:w-[500px]
+         transform  w-full  md:w-[500px]
           shadow-md
          transition-all ease-in-out
           overflow-hidden
@@ -32,7 +35,9 @@ const FavoriteList = ({ isOpen }) => {
       <div className="flex flex-col gap-3 mt-5 px max-h-[100%] w-full overflow-y-auto">
         {
             favoriteTraks?.map((track, index)=>{
-                return <FavSongItem track={track} number={index } key={index}/>
+              console.log(index + 1);
+              
+                return <FavSongItem track={track} number={index + 1} key={index}/>
             })
         }
       </div>

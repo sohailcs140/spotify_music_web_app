@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import logoImage from "../../assets/images/logo.svg";
 import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from '@mui/icons-material/Close';
 import useSideMenuContext from "../../context/SideMenuContext";
 import { Fragment } from "react";
+import MenuItem from "./MenuItem";
+import MeneHeading from "./MeneHeading";
+import HomeIcon from "@mui/icons-material/Home";
+import MicOutlinedIcon from "@mui/icons-material/MicOutlined";
 
 
 const MobileMenu = () => {
@@ -11,7 +16,7 @@ const MobileMenu = () => {
   return (
     <Fragment>
         {/* logo and menu toggler */}
-    <div className="sm:hidden">
+    <div className="sm:hidden pe">
     <div className="flex justify-between">
         <Link to={"/"}>
           <img src={logoImage} alt="logo" srcSet="" />
@@ -22,9 +27,12 @@ const MobileMenu = () => {
       </div>
 
     {/* mobile menu */}
-    <div className={`pe absolute top-0 left-0 
+    <div className={`pe absolute top-5 left-0 overflow-hidden
         transform translate-x-[-100%] transition-all ease-in-out
-          bg-green-600 z-[999]
+        h-screen z-[999999]
+        ps-2 pe-2
+        bg-primary shadow-md
+        w-[86%]
         ${isOpen&&"translate-x-[0%]"}`}>
       {/* heading */}
       <div className="flex justify-between">
@@ -32,14 +40,16 @@ const MobileMenu = () => {
           <img src={logoImage} alt="logo" srcSet="" />
         </Link>
         <button onClick={() => setIsOpen((pre) => !pre)}>
-          <MenuIcon fontSize="large" />
+          <CloseIcon fontSize="large" />
         </button>
       </div>
 
       {/* links */}
-      <div className="">
+      <div className="mt-4 max-h-[100%] overflow-auto">
 
-
+        <MeneHeading text="Discover" />
+        <MenuItem href={"/"} title={"home"} active={true} Icon={HomeIcon} />
+       
       </div>
     </div>
     </div>

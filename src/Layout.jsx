@@ -10,7 +10,6 @@ import { TrackContextProvider } from "./context/TrackContext";
 const Layout = () => {
 
   return (
-    <div className="">
       
         <SideMenuContextProvider>
         {/* <TrackContextProvider> */}
@@ -24,7 +23,6 @@ const Layout = () => {
           {/* </TrackContextProvider> */}
         </SideMenuContextProvider>
         
-    </div>
   );
 };
 

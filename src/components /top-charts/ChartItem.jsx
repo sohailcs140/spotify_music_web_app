@@ -43,7 +43,7 @@ const ChartItem = ({playlist}) => {
 
             <div className="flex flex-col gap-3 pt-4 max-h-[300px] w-full overflow-y-auto">
                 {
-                    traks?.map((track , index)=> <SongItem number={index + 1} track={track.track} key={track.id} />
+                    traks?.map((track , index)=> track.track && <SongItem number={index + 1} track={track.track} key={track.id} />
                         
                     )
                 }
